@@ -1,0 +1,12 @@
+{% load staticfiles %}
+
+<form action="" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_0ka22OyPdHUkD8DrphKsXUDy"
+    data-amount="2000"
+    data-name="Demo Site"
+    data-description="2 widgets ($20.00)"
+    data-image="{% static "img/heart_PNG704.png" %}">
+  </script>
+</form>
