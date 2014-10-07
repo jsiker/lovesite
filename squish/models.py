@@ -13,7 +13,16 @@ class Dater(AbstractUser):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
+
 class Location(models.Model):
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     dater = models.ForeignKey(Dater, related_name='location')
+
+##### Snir Example
+# class ExampleModel(models.Model):
+#     image = models.ImageField(upload_to='static/img', default='static/img/no-image.jpg')
+
+
+class Document(models.Model):
+    docfile = models.FileField(upload_to='img/')

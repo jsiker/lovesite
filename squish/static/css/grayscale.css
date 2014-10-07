@@ -262,7 +262,7 @@ a:focus {
 .download-section {
     width: 100%;
     /*padding: 10px 0;*/
-    height: 600px;
+    height: 900px;
     color: #fff;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     background: url(../img/fire_heart_wallpaper.jpg) no-repeat center center scroll;
@@ -285,7 +285,7 @@ a:focus {
     }
 
     .download-section {
-        padding: 100px 0;
+        padding: 300px 0;
         text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 
     }

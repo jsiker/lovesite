@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+import django_messages
 
 urlpatterns = patterns('',
     # Examples:
@@ -7,7 +8,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^home/', 'squish.views.home', name='home'),
+    url(r'^home', 'squish.views.home', name='home'),
 
     #login/logout/register
     url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout'),
@@ -26,6 +27,14 @@ urlpatterns = patterns('',
 
     #profile
     url(r'^profile/', 'squish.views.profile', name='profile'),
+    # url(r'^upload_pic', 'squish.views.upload_pic', name='upload_pic'),
+
+    #file upload
+    url(r'^upload/$', 'squish.views.upload', name='upload'),
+
+    #messaging
+    url(r'^message/', include('django_messages.urls'))
+
 
 
 )

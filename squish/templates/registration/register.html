@@ -1,6 +1,6 @@
-
 {% load staticfiles %}
-<form method="post" action="."> {# dot specifies 'submit to the same url', not necessary (same as default, but more explicit#}
+<div align="center">
+<form id='ajaxform' method="post" action="{% url 'register' %}"> {# dot specifies 'submit to the same url', not necessary (same as default, but more explicit#}
     {% csrf_token %}
 {#    {{ form.as_p }}#}
 <table width="100%" border="0" cellspacing="5" cellpadding="5">
@@ -16,7 +16,7 @@
 <form action="" method="POST">
     {% csrf_token %}
   <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+src="https://checkout.stripe.com/checkout.js" class="stripe-button"
     data-key="pk_test_0ka22OyPdHUkD8DrphKsXUDy"
     data-amount="2000"
     data-name="Sparq"
@@ -24,3 +24,4 @@
     data-image="{% static "img/heart_PNG704.png" %}">
   </script>
 </form>
+</div>

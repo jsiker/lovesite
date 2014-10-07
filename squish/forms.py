@@ -27,7 +27,19 @@ class EmailUserCreationForm(UserCreationForm):
             code='duplicate_username',
         )
 
+####fileUploadExample
+class DocumentForm(forms.Form):
+    docfile = forms.FileField(
+        label='Select a file'
+    )
 
-class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file = forms.FileField()
+
+# class UploadFileForm(forms.Form):
+#     title = forms.CharField(max_length=50)
+#     file = forms.FileField()
+
+######Snir example
+# class ImageUploadForm(forms.Form):
+#     """Image upload form."""
+#     image = forms.ImageField()
+
