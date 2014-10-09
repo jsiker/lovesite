@@ -1,41 +1,31 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
 {% block profile %}
-{#<form action="{% url upload_pic %}" method="post" enctype="multipart/form-data">{% csrf_token %}#}
-{#    <p>#}
-{#        <input id="id_image" type="file" class="" name="image">#}
-{#    </p>#}
-{#        <input type="submit" value="Submit" />#}
-{#</form>#}
-    <!-- List of uploaded documents -->
-<div align="center">
-    {% load inbox %}
-{#    {% if documents %}#}
-{#        <ul>#}
-{#        {% for document in documents %}#}
-{#            <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>#}
-{#        {% endfor %}#}
-{#        </ul>#}
-{#    {% else %}#}
-{#        <p>No documents.</p>#}
-{#    {% endif %}#}
-{##}
-{#        <!-- Upload form. Note enctype attribute! -->#}
-{#        <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">#}
-{#            {% csrf_token %}#}
-{#            <p>{{ form.non_field_errors }}</p>#}
-{#            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>#}
-{#            <p>#}
-{#                {{ form.docfile.errors }}#}
-{#                {{ form.docfile }}#}
-{#            </p>#}
-{#            <p><input type="submit" value="Upload" /></p>#}
-{#        </form>#}
 
-    <p>Hey, {{ user.username }}!</p>
-    <p>Your email address is {{ user.email }}</p>
-    <p>Your city is {{ user.city }}</p>
-    <p>Age: {{ user.age }}</p>
-    <p>Last login: {{ user.last_login }}</p>
+<div align="center">
+
+        <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+            <p><input type="submit" value="Upload" /></p>
+        </form>
+
+        <div class="col-sm-4 col-sm-offset-4 panel" style="background: lightseagreen;">
+            <p>Hey, {{ user.username }}!</p>
+            <p>Your email address is {{ user.email }}</p>
+            <p id="#about">Your city is {{ Dater.city }}</p>
+            <p>Age: {{ Dater.age }}</p>
+            <p>Last login: {{ user.last_login }}</p>
+            <a href="{% url 'home' %}" class="btn btn-danger" role="button">Log Out</a>
+        </div>
+
+
 </div>
+
 {% endblock %}
+

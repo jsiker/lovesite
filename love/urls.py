@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib import admin
-import django_messages
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,8 +12,9 @@ urlpatterns = patterns('',
     url(r'^home', 'squish.views.home', name='home'),
 
     #login/logout/register
-    url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout'),
+    url(r'^logout/$', 'squish.views.user_logout', name='logout'),
     url(r'^register/$', 'squish.views.register', name='register'),
+    # url(r'^login/$', 'squish.views.user_login', name='login'),
     url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^password_reset/$', 'django.contrib.auth.views.password_reset', name='password_reset'),  #user enters email for account they want to reset
     url(r'^password_reset/done/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'), #user redirected to email sent page
@@ -30,11 +32,13 @@ urlpatterns = patterns('',
     # url(r'^upload_pic', 'squish.views.upload_pic', name='upload_pic'),
 
     #file upload
-    url(r'^upload/$', 'squish.views.upload', name='upload'),
+    # url(r'^upload/$', 'squish.views.upload', name='upload'),
 
     #messaging
     url(r'^message/', include('django_messages.urls'))
 
 
-
 )
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

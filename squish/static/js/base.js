@@ -52,28 +52,3 @@ $(document).ready( function () {
 
 
 
-
-
-
-//    $('#login').click(function(){
-//        $('#loginBlock').toggle('fast')
-//    })
-
-
-
-
-//        $('form').append('<button>'+"Subscribe"+'</button>')
-//
-//
-//        $('form').submit(function(e){
-//            e.preventDefault();
-//            var form=$(e.target);
-//
-//            $.ajax({
-//                url: '{% profile.html %}',
-//                type: 'post',
-//                data: account_form.serialize() + '&' + form.serialize(),
-//                error: function(xhr, ajaxOptions, thrownError){ alert(thrownError); },
-//                success: function(){}
-//            })
-//        });

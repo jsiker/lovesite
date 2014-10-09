@@ -1,27 +1,64 @@
 {% load staticfiles %}
 <div align="center">
-<form id='ajaxform' method="post" action="{% url 'register' %}"> {# dot specifies 'submit to the same url', not necessary (same as default, but more explicit#}
-    {% csrf_token %}
-{#    {{ form.as_p }}#}
-<table width="100%" border="0" cellspacing="5" cellpadding="5">
-    {% for field in form %}
+    <h1>Register with Sparq</h1>
 
-           <tr><td style="padding: 5px;" width="100" align="center" valign="top">{{ field.label_tag }}</td>
-           <td align="left" valign="top"><span style="padding-left: 10px;">{{ field }}</span></td></tr>
-    {% endfor %}
-    </table>
+        {% if registered %}
 
-    <input type="submit" value="Submit">
-</form>
-<form action="" method="POST">
-    {% csrf_token %}
-  <script
-src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="pk_test_0ka22OyPdHUkD8DrphKsXUDy"
-    data-amount="2000"
-    data-name="Sparq"
-    data-description="1 month @ ($20.00)"
-    data-image="{% static "img/heart_PNG704.png" %}">
-  </script>
-</form>
+            Hey, <strong>thank you for registering!</strong>
+            <a href="{% url 'home' %}" class="btn btn-info btn-lg">Return <i class="fa fa-home"></i></a><br />
+
+        {% else %}
+
+            Hey, <strong>register here!</strong><br />
+
+            <div class="col-sm-4 col-sm-offset-4">
+                <form id="user_form" method="post" role="form" class="form-horizontal" action="{% url 'register' %}" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <!-- Display each form. The as_p method wraps each element in a paragraph
+                         (<p>) element. This ensures each element appears on a new line,
+                         making everything look neater. -->
+                    {% for field in user_form %}
+                        <div class="form-group">
+                            <label class="label-control">{{ field.label_tag }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+
+                    {% for field in profile_form %}
+                        <div class="form-group">
+                            <label class="label-control">{{ field.label_tag }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    {% for field in location_form %}
+                    <div class="form-group">
+                            <label class="label-control">{{ field.label_tag }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+
+                    <!-- Provide a button to click to submit the form. -->
+                    <button type="submit" name="submit" class="btn btn-block btn-lg btn-danger" >Register <i class="fa fa-rocket"></i></button>
+                </form>
+            </div>
+
+            <script type="text/javascript">
+                $("input").addClass("form-control");
+                $("label").addClass("label-control");
+                $("select").addClass("form-control");
+                $("input#id_picture").removeClass("form-control")
+            </script>
+
+        {% endif %}
+
+          {% csrf_token %}
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_0ka22OyPdHUkD8DrphKsXUDy"
+            data-amount="2000"
+            data-name="Sparq"
+            data-description="1 month @ ($20.00)"
+            data-image="{% static "img/heart_PNG704.png" %}">
+          </script>
 </div>

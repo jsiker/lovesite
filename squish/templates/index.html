@@ -23,6 +23,9 @@
     <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
+    <!-- Firebase JS -->
+{#    <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>#}
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -50,28 +53,16 @@
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#about">FAQ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#download">Register</a>
-                    </li>
                     {% if user.is_authenticted %}
-                        <li>
-                            <a href="{% url 'logout' %}">Logout</a>
-                        </li>
+                        <li class="hidden"><a href="#page-top"></a></li>
+                        <li><a class="page-scroll" href="#contact">Contact</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
-                        <li>
-                            <a id="login">Login</a>
-
-                        </li>
+                        <li><a class="page-scroll" href="#about">FAQ</a></li>
+                        <li><a class="page-scroll" href="#contact">Contact</a></li>
+                        <li><a class="page-scroll" href="#download">Register</a></li>
+                        <li><a id="login">Login</a></li>
                     {% endif %}
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

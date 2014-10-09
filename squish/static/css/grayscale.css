@@ -39,6 +39,7 @@ p {
     font-size: 18px;
     line-height: 1.5;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 @media(min-width:767px) {
@@ -46,6 +47,7 @@ p {
         margin: 0 0 35px;
         font-size: 20px;
         line-height: 1.6;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     }
 }
 
@@ -68,7 +70,7 @@ a:focus {
 
 .navbar-custom {
     margin-bottom: 0;
-    border-bottom: 1px solid transparent;
+    border-bottom: 4px solid red;
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     background-color: #000;
@@ -132,7 +134,7 @@ a:focus {
     }
 
     .navbar-custom.top-nav-collapse {
-        border-bottom: 1px solid rgba(255,255,255,.3);
+        border-bottom: 2px solid rgba(225, 10, 10);
     }
 }
 
@@ -295,10 +297,13 @@ a:focus {
         margin-top: 250px;
     }
 }
-
+form {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
 .btn {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     font-weight: 400;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
@@ -306,7 +311,7 @@ a:focus {
 }
 
 .btn-default {
-    border: 1px solid white;
+    border: 4px solid white;
     color: white;
     background-color: transparent;
 }

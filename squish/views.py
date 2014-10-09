@@ -1,27 +1,22 @@
 import json
-from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import render, redirect, render_to_response
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from love import settings
-from squish import forms
-from squish.forms import EmailUserCreationForm, DocumentForm
-from squish.models import Document
+from squish.forms import UserForm, UserProfileForm
 
 
 def home(request):
     return render(request, 'index.html')
 
-
-# def logout(request):
-#     return render(request, 'registration/logout.html')
+@login_required()
+def user_logout(request):
+    logout(request)
+    return render(request, 'index.html')
 
 @login_required
 def profile(request):
@@ -29,54 +24,59 @@ def profile(request):
 
 
 def register(request):
+    # Like before, get the request's context.
+    context = RequestContext(request)
+
+    # If it's a HTTP POST, we're interested in processing form data.
     if request.method == 'POST':
-        form = EmailUserCreationForm(request.POST)
+        # Attempt to grab information from the raw form information.
+        # Note that we make use of both UserForm and UserProfileForm.
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
 
-        if form.is_valid():
-            # form.save()
-            # data = json.loads(request.body)
-            # user = User.objects.create(
-            #     user_first_name=data['first_name'],
-            #     user_last_name=data['last_name'],
-            #     user_username=data['username'],
-            #     user_email=data['email'],
-            #     user_pasword1=data['password1'],
-            #     user_password2=data['password2'],
-            #     )
-            # user = form.save()
-            messages.info(request, 'Thanks for registering, you\'re now logged in.)')
-            # user = authenticate(username=request.POST['username'],
-            #                     password=request.POST['password'])
-            user = User.objects.create_user(
-                form.cleaned_data['first_name'],
-                form.cleaned_data['last_name'],
-                form.cleaned_data['username'],
-                form.cleaned_data['email'],
-            )
-            user.email_user("Welcome!", "Thank you for signing up for our website.")
-            text_content = 'Thank you for signing up for our website, {}'.format(user.username)
-            html_content = '<h2>Thanks {} {} for signing up!</h2> <div>I hope you enjoy using our site. ' \
-                           'You registered at {}.</div>'.format(user.first_name, user.last_name, user.date_joined)
-            msg = EmailMultiAlternatives("Welcome!", text_content, settings.DEFAULT_FROM_EMAIL, [user.email])
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
-            return redirect("profile")
+        # If the two forms are valid...
+        if user_form.is_valid() and profile_form.is_valid():
+            # Save the user's form data to the database.
+            user = user_form.save()
+
+            # Now we hash the password with the set_password method.
+            # Once hashed, we can update the user object.
+            user.set_password(user.password)
+            user.save()
+
+            # Now sort out the UserProfile instance.
+            # Since we need to set the user attribute ourselves, we set commit=False.
+            # This delays saving the model until we're ready to avoid integrity problems.
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            # Did the user provide a profile picture?
+            # If so, we need to get it from the input form and put it in the UserProfile model.
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+            # Now we save the UserProfile model instance.
+            profile.save()
+
+            # Update our variable to tell the template registration was successful.
+            return redirect('/home')
+        # Invalid form or forms - mistakes or something else?
+        # Print problems to the terminal.
+        # They'll also be shown to the user.
+        else:
+            print user_form.errors, profile_form.errors
+
+    # Not a HTTP POST, so we render our form using two ModelForm instances.
+    # These forms will be blank, ready for user input.
     else:
-        form = EmailUserCreationForm()
+        user_form = UserForm()
+        profile_form = UserProfileForm()
 
-    return render(request, "registration/register.html", {
-        'form': form,
-    })
-    # if request.method == 'POST':
-    #     form = UserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('profile')
-    #     else:
-    #         form = UserCreationForm
-    #     return render(request, "registration/register.html", {
-    #         'form': form
-    #     })
+    # Render the template depending on the context.
+    return render_to_response(
+            'registration/register.html',
+            {'user_form': user_form, 'profile_form': profile_form},
+            context)
 
 
 @csrf_exempt
@@ -84,40 +84,29 @@ def pay(request):
     return render(request, 'registration/payments.html')
 
 @login_required()
-def upload(request):
-    # Handle file upload
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            newdoc = Document(docfile = request.FILES['docfile'])
-            newdoc.save()
-
-            # Redirect to the document list after POST
-            return HttpResponseRedirect(reverse('squish.views.profile'))
-    else:
-        form = DocumentForm()  # A empty, unbound form
-
-    # Load documents for the list page
-    documents = Document.objects.all()
-
-    # Render list page with the documents and the form
-    return render_to_response(
-        'profile.html',
-        {'documents': documents, 'form': form},
-        context_instance=RequestContext(request)
-    )
-
-##### Snir example
-# @login_required()
-# def upload_pic(request):
+# def upload(request):
+#     # Handle file upload
 #     if request.method == 'POST':
-#         form = ImageUploadForm(request.POST, request.FILES)
+#         form = DocumentForm(request.POST, request.FILES)
 #         if form.is_valid():
-#             m = ExampleModel.objects.get(pk=image_id)
-#             m.model_pic = form.cleaned_data['image']
-#             m.save()
-#             return HttpResponse('image upload success')
-#     return HttpResponseForbidden('allowed only via POST')
+#             newdoc = Document(docfile=request.FILES['docfile'])
+#             newdoc.save()
+#
+#             # Redirect to the document list after POST
+#             return HttpResponseRedirect(reverse('squish.views.profile'))
+#     else:
+#         form = DocumentForm()  # A empty, unbound form
+#
+#     # Load documents for the list page
+#     documents = Document.objects.all()
+#
+#     # Render list page with the documents and the form
+#     return render_to_response(
+#         'profile.html',
+#         {'documents': documents, 'form': form},
+#         context_instance=RequestContext(request)
+#     )
+#
 
 
 def user_login(request):
@@ -164,4 +153,4 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render_to_response('registration/login.html', {}, context)
+        return render_to_response('index.html', {}, context)
