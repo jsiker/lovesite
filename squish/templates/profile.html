@@ -16,10 +16,10 @@
         </form>
 
         <div class="col-sm-4 col-sm-offset-4 panel" style="background: lightseagreen;">
-            <p>Hey, {{ user.username }}!</p>
+            <p>Looking good, {{ user.username }}!</p>
             <p>Your email address is {{ user.email }}</p>
-            <p id="#about">Your city is {{ Dater.city }}</p>
-            <p>Age: {{ Dater.age }}</p>
+            <p id="#about">Your city is {{ user.profile.city }}</p>
+            <p>Age: {{ user.profile.age }}</p>
             <p>Last login: {{ user.last_login }}</p>
             <a href="{% url 'home' %}" class="btn btn-danger" role="button">Log Out</a>
         </div>

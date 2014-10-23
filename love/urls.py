@@ -24,6 +24,9 @@ urlpatterns = patterns('',
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'), #your password has been reset page
     url(r'^pay/$', 'squish.views.pay', name='pay'),
 
+    #messaging
+    url(r'^messages/', include('postman.urls')),
+
     #stripe
     url(r'^payments/', include("payments.urls")),
 

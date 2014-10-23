@@ -53,10 +53,6 @@ docs/_build/
 # PyBuilder
 target/
 
-#my stuff
-venv
-*.pyc
-staticfiles
 local_settings.py
-settings.py
-.idea/
+.idea
+.DS_Store

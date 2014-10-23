@@ -5,7 +5,7 @@ from django.db import models
 
 class Dater(models.Model):
     # dater class extends from user
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='profile')
 
     #addition attributes to include
     age = models.IntegerField(max_length=3, help_text='age', null=True, blank=True)
