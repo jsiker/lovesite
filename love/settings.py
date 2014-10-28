@@ -23,8 +23,8 @@ SECRET_KEY = 'h@83tw@pdp9qqu#8gw@7)%=r!#!z#k)!&(0yh1g4bbfmvz)k#!'
 POSTMAN_AUTO_MODERATE_AS = True
 
 #####STRIPE
-STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "sk_test_NiYxCU5I0d8nCligrf3TLgKp")
-STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "pk_test_0ka22OyPdHUkD8DrphKsXUDy")
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "xxxxxxx")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "xxxxxxx")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -99,7 +99,7 @@ LOGIN_URL = 'login'  # given the string of login url page
 # EMAIL_USE_TLS = True
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER = 'jon.siker@gmail.com'
-# EMAIL_HOST_PASSWORD = 'jon19866'
+# EMAIL_HOST_PASSWORD = 'xxxxxxxx'
 # EMAIL_PORT = 587
 # DEFAULT_FROM_EMAIL = 'jon.siker@gmail.com'
 # AUTH_USER_MODEL = 'squish.User'
